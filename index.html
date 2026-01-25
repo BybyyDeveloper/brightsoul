@@ -10,32 +10,13 @@
       src: url('https://fonts.cdnfonts.com/s/17641/PressStart2P-Regular.woff') format('woff');
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       background: linear-gradient(#1b1f3b, #0a0d1a);
       color: #f5f5f5;
       font-family: 'Pixel', monospace;
       overflow: hidden;
-    }
-
-    .stars {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: url('https://i.imgur.com/9aZ7K5L.png') repeat;
-      animation: moveStars 60s linear infinite;
-      z-index: 0;
-      opacity: 0.4;
-    }
-
-    @keyframes moveStars {
-      from { background-position: 0 0; }
-      to { background-position: -1000px 1000px; }
     }
 
     .container {
@@ -70,11 +51,7 @@
       color: #cfd8ff;
     }
 
-    .menu {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
+    .menu { display: flex; flex-direction: column; gap: 15px; }
 
     .menu button {
       background: #2d2f5c;
@@ -114,10 +91,10 @@
       .pixel-frame { padding: 15px 20px; }
       .subtitle { font-size: 12px; }
       .footer { font-size: 9px; text-align: center; }
-    }
       .menu button { font-size: 12px; padding: 10px 18px; }
     }
-  .popup-btn {
+
+    .popup-btn {
       background: #ffd700;
       border: 3px solid #000;
       color: #2d2f5c;
@@ -129,29 +106,24 @@
       transition: all 0.2s ease;
     }
 
-    .popup-btn:hover {
-      transform: scale(1.05);
-    }
+    .popup-btn:hover { transform: scale(1.05); }
   </style>
 </head>
 <body>
-  <div class="stars"></div>
-
   <div class="container">
     <div class="pixel-frame">
       <div class="logo">BRIGHT SOUL</div>
       <div class="subtitle" id="welcome-text">A Pixel RPG Adventure</div>
 
       <div class="menu" style="width:100%; align-items:center;">
-        <button onclick="alert('Download akan segera tersedia')">Download Game</button>
-        <button onclick="alert('Bright Soul
-Developer: Bybyy Developer
-Status: Demo In Development')">Credit</button>
+        <button id="download-game">Download</button>
+        <button id="play-trailer">Play Trailer</button>
+        <button id="credit-btn">Credit</button>
       </div>
     </div>
 
-    <!-- Popup Box -->
-    <div id="popup-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:10; align-items:center; justify-content:center;">
+    <!-- Popup Download -->
+    <div id="popup-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:50; align-items:center; justify-content:center;">
       <div class="pixel-frame" style="max-width:320px; text-align:center;">
         <div style="font-size:12px; margin-bottom:15px; line-height:1.6;">
           Bright Soul masih dalam tahap pengembangan demo.<br/>
@@ -161,12 +133,27 @@ Status: Demo In Development')">Credit</button>
       </div>
     </div>
 
+    <!-- Popup Trailer -->
+    <div id="trailer-popup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:60; align-items:center; justify-content:center;">
+      <div class="pixel-frame" style="max-width:480px; width:90%; text-align:center;">
+        <div style="font-size:12px; margin-bottom:10px;">Trailer Bright Soul</div>
+        <video id="trailer-video" width="100%" controls style="border:4px solid #000;">
+          <source src="trailer.mp4" type="video/mp4">
+          Browser kamu tidak mendukung video.
+        </video>
+        <button id="close-trailer" class="popup-btn" style="margin-top:10px;">Close</button>
+      </div>
+    </div>
+
     <div class="footer">Demo Version • In Development<br/>Managed by Bybyy Developer<br/>© 2026 Bright Soul - Indie RPG</div>
   </div>
+
   <script>
-    // Simple device-based dynamic behavior
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const downloadBtn = document.querySelector('.menu button:first-child');
+
+    const downloadBtn = document.getElementById('download-game');
+    const playTrailerBtn = document.getElementById('play-trailer');
+    const creditBtn = document.getElementById('credit-btn');
     const welcomeText = document.getElementById('welcome-text');
 
     if (isMobile) {
@@ -177,20 +164,34 @@ Status: Demo In Development')">Credit</button>
       welcomeText.innerText = 'Welcome, Adventurer! Prepare yourself to enter the world of Bright Soul.';
     }
 
-    // Link Google Drive (gunakan format direct download)
-    // Contoh: https://drive.google.com/uc?export=download&id=FILE_ID
-    const apkLink = 'https://drive.google.com/uc?export=download&id=APK_FILE_ID';
-    const pcLink  = 'https://drive.google.com/uc?export=download&id=PC_FILE_ID';
-
     const popupOverlay = document.getElementById('popup-overlay');
     const closePopup = document.getElementById('close-popup');
+
+    const trailerPopup = document.getElementById('trailer-popup');
+    const trailerVideo = document.getElementById('trailer-video');
+    const closeTrailer = document.getElementById('close-trailer');
 
     downloadBtn.onclick = () => {
       popupOverlay.style.display = 'flex';
     };
 
+    playTrailerBtn.onclick = () => {
+      trailerPopup.style.display = 'flex';
+      trailerVideo.play();
+    };
+
+    creditBtn.onclick = () => {
+      popupOverlay.style.display = 'flex';
+    };
+
     closePopup.onclick = () => {
       popupOverlay.style.display = 'none';
+    };
+
+    closeTrailer.onclick = () => {
+      trailerVideo.pause();
+      trailerVideo.currentTime = 0;
+      trailerPopup.style.display = 'none';
     };
   </script>
 </body>
