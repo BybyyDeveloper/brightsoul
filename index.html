@@ -107,12 +107,29 @@
     }
 
     .popup-btn:hover { transform: scale(1.05); }
+    .announcement {
+      font-size: 18px;
+      color: #ffdd88;
+      margin-bottom: 15px;
+      text-shadow: 3px 3px 0 #000;
+      animation: glowPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0%   { transform: scale(1);   opacity: 0.7; text-shadow: 2px 2px 0 #000; }
+      50%  { transform: scale(1.05); opacity: 1;   text-shadow: 4px 4px 0 #000, 0 0 12px #ffd700; }
+      100% { transform: scale(1);   opacity: 0.7; text-shadow: 2px 2px 0 #000; }
+    }
   </style>
 </head>
 <body>
   <div class="container">
+    <div class="announcement">📢 GAME DEMO AKAN DIBUKA PADA 10 FEBRUARI 2026</div>
     <div class="pixel-frame">
       <div class="logo">BRIGHT SOUL</div>
+      <div style="font-size:11px; color:#ffdd88; margin-bottom:10px; text-shadow:2px 2px 0 #000;">
+        📢 Game demo akan dibuka pada tanggal <strong>10 Februari 2026</strong>
+      </div>
       <div class="subtitle" id="welcome-text">A Pixel RPG Adventure</div>
 
       <div class="menu" style="width:100%; align-items:center;">
