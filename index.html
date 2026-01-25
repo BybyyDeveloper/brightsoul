@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bright Soul - RPG Pixel Adventure</title>
+  <style>
+    @font-face {
+      font-family: 'Pixel';
+      src: url('https://fonts.cdnfonts.com/s/17641/PressStart2P-Regular.woff') format('woff');
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(#1b1f3b, #0a0d1a);
+      color: #f5f5f5;
+      font-family: 'Pixel', monospace;
+      overflow: hidden;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url('https://i.imgur.com/9aZ7K5L.png') repeat;
+      animation: moveStars 60s linear infinite;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    @keyframes moveStars {
+      from { background-position: 0 0; }
+      to { background-position: -1000px 1000px; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .logo {
+      font-size: clamp(28px, 6vw, 48px);
+      color: #ffd700;
+      text-shadow: 4px 4px 0 #000;
+      margin-bottom: 20px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .subtitle {
+      font-size: 14px;
+      margin-bottom: 40px;
+      color: #cfd8ff;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .menu button {
+      background: #2d2f5c;
+      border: 3px solid #ffd700;
+      color: #ffd700;
+      font-family: 'Pixel', monospace;
+      padding: 14px 24px;
+      font-size: clamp(12px, 3vw, 14px);
+      cursor: pointer;
+      text-shadow: 2px 2px 0 #000;
+      transition: all 0.2s ease;
+      width: 100%;
+      max-width: 260px;
+    }
+
+    .menu button:hover {
+      background: #ffd700;
+      color: #2d2f5c;
+      transform: translateY(-2px) scale(1.05);
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 10px;
+      color: #aaa;
+    }
+
+    .pixel-frame {
+      border: 6px solid #fff;
+      padding: 20px 30px;
+      background: rgba(0,0,0,0.4);
+      box-shadow: 0 0 0 6px #000;
+    }
+
+    @media (max-width: 600px) {
+      .pixel-frame { padding: 15px 20px; }
+      .subtitle { font-size: 12px; }
+      .footer { font-size: 9px; text-align: center; }
+    }
+      .menu button { font-size: 12px; padding: 10px 18px; }
+    }
+  .popup-btn {
+      background: #ffd700;
+      border: 3px solid #000;
+      color: #2d2f5c;
+      font-family: 'Pixel', monospace;
+      padding: 10px 20px;
+      font-size: 12px;
+      cursor: pointer;
+      text-shadow: 1px 1px 0 #fff;
+      transition: all 0.2s ease;
+    }
+
+    .popup-btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <div class="container">
+    <div class="pixel-frame">
+      <div class="logo">BRIGHT SOUL</div>
+      <div class="subtitle" id="welcome-text">A Pixel RPG Adventure</div>
+
+      <div class="menu" style="width:100%; align-items:center;">
+        <button onclick="alert('Download akan segera tersedia')">Download Game</button>
+        <button onclick="alert('Bright Soul
+Developer: Bybyy Developer
+Status: Demo In Development')">Credit</button>
+      </div>
+    </div>
+
+    <!-- Popup Box -->
+    <div id="popup-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:10; align-items:center; justify-content:center;">
+      <div class="pixel-frame" style="max-width:320px; text-align:center;">
+        <div style="font-size:12px; margin-bottom:15px; line-height:1.6;">
+          Bright Soul masih dalam tahap pengembangan demo.<br/>
+          Download akan tersedia segera!
+        </div>
+        <button id="close-popup" class="popup-btn">OK</button>
+      </div>
+    </div>
+
+    <div class="footer">Demo Version • In Development<br/>Managed by Bybyy Developer<br/>© 2026 Bright Soul - Indie RPG</div>
+  </div>
+  <script>
+    // Simple device-based dynamic behavior
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const downloadBtn = document.querySelector('.menu button:first-child');
+    const welcomeText = document.getElementById('welcome-text');
+
+    if (isMobile) {
+      downloadBtn.innerText = 'Download APK';
+      welcomeText.innerText = 'Selamat datang, Petualang Android! Siapkan jiwamu untuk memasuki dunia Bright Soul.';
+    } else {
+      downloadBtn.innerText = 'Download for PC';
+      welcomeText.innerText = 'Welcome, Adventurer! Prepare yourself to enter the world of Bright Soul.';
+    }
+
+    // Link Google Drive (gunakan format direct download)
+    // Contoh: https://drive.google.com/uc?export=download&id=FILE_ID
+    const apkLink = 'https://drive.google.com/uc?export=download&id=APK_FILE_ID';
+    const pcLink  = 'https://drive.google.com/uc?export=download&id=PC_FILE_ID';
+
+    const popupOverlay = document.getElementById('popup-overlay');
+    const closePopup = document.getElementById('close-popup');
+
+    downloadBtn.onclick = () => {
+      popupOverlay.style.display = 'flex';
+    };
+
+    closePopup.onclick = () => {
+      popupOverlay.style.display = 'none';
+    };
+  </script>
+</body>
+</html>
