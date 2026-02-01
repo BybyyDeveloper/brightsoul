@@ -34,30 +34,8 @@
                 transform: translateX(-100%);
                 transition: transform 0.6s steps(6);
             }
-
             .screen-wipe.active {
                 transform: translateX(0);
-            }
-
-            /* ===== PARTICLES ===== */
-            .particle {
-                position: absolute;
-                width: 6px;
-                height: 6px;
-                background: #ffd700;
-                box-shadow: 0 0 8px #ffd700;
-                animation: floatParticle 3s linear infinite;
-            }
-
-            @keyframes floatParticle {
-                from {
-                    transform: translateY(0) scale(1);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateY(-120px) scale(0);
-                    opacity: 0;
-                }
             }
 
             /* ===== LAYOUT ===== */
@@ -68,7 +46,6 @@
                 justify-content: center;
                 align-items: center;
                 text-align: center;
-                position: relative;
             }
 
             .countdown {
@@ -120,7 +97,7 @@
                 gap: 15px;
             }
 
-            /* ===== ATTACK BUTTON ===== */
+            /* ===== BUTTONS ===== */
             .menu button {
                 background: #2d2f5c;
                 border: 3px solid #ffd700;
@@ -129,7 +106,6 @@
                 font-family: "Pixel";
                 cursor: pointer;
                 position: relative;
-                overflow: hidden;
             }
 
             .menu button.attack {
@@ -170,8 +146,13 @@
                 border: 4px solid #000;
             }
 
+            .popup-text {
+                font-size: 11px;
+                line-height: 1.6;
+                margin-bottom: 12px;
+            }
+
             .popup-btn {
-                margin-top: 10px;
                 background: #ffd700;
                 border: 3px solid #000;
                 padding: 10px;
@@ -185,10 +166,7 @@
         <!-- TRANSITION -->
         <div class="screen-wipe" id="wipe"></div>
 
-        <div class="container" id="scene">
-            <!-- PARTICLES AUTO -->
-            <div id="particles"></div>
-
+        <div class="container">
             <!-- COUNTDOWN -->
             <div class="countdown">
                 <div class="time-box">
@@ -210,20 +188,37 @@
                 <div class="subtitle">A Pixel RPG Adventure</div>
 
                 <div class="menu">
-                    <button>Download</button>
+                    <button id="downloadBtn">Download APK</button>
                     <button id="playTrailer">Play Trailer ⚔️</button>
-                    <button>Credit</button>
+                    <button id="creditBtn">Credit</button>
                 </div>
             </div>
         </div>
 
-        <!-- TRAILER -->
-        <div class="popup" id="popup">
+        <!-- POPUP TRAILER -->
+        <div class="popup" id="trailerPopup">
             <div class="pixel-frame" style="max-width: 480px; width: 90%">
                 <video id="video" controls>
                     <source src="trailer.mp4" type="video/mp4" />
                 </video>
-                <button class="popup-btn" id="close">Close</button>
+                <button class="popup-btn" id="closeTrailer">Close</button>
+            </div>
+        </div>
+
+        <!-- POPUP INFO -->
+        <div class="popup" id="infoPopup">
+            <div
+                class="pixel-frame"
+                style="max-width: 360px; text-align: center"
+            >
+                <div class="popup-text">
+                    🌱 <strong>Bright Soul</strong> saat ini masih berada<br />
+                    dalam tahap <strong>pengembangan demo</strong>.<br /><br />
+                    Fitur ini akan terbuka ketika dunia<br />
+                    Bright Soul siap dijelajahi.<br /><br />
+                    Mohon bersabar, Petualang ✨
+                </div>
+                <button class="popup-btn" id="closeInfo">OK</button>
             </div>
         </div>
 
@@ -241,42 +236,36 @@
                 g("seconds").innerText = Math.floor(diff / 1000) % 60;
             }, 1000);
 
-            /* ===== PARTICLES ===== */
-            const particleBox = document.getElementById("particles");
-            setInterval(() => {
-                const p = document.createElement("div");
-                p.className = "particle";
-                p.style.left = Math.random() * window.innerWidth + "px";
-                p.style.bottom = "0px";
-                particleBox.appendChild(p);
-                setTimeout(() => p.remove(), 3000);
-            }, 180);
-
-            /* ===== ATTACK + TRANSITION ===== */
+            /* ===== ELEMENTS ===== */
             const play = g("playTrailer");
             const wipe = g("wipe");
-            const popup = g("popup");
+            const trailerPopup = g("trailerPopup");
+            const infoPopup = g("infoPopup");
             const video = g("video");
-            const close = g("close");
 
+            /* ===== PLAY TRAILER ===== */
             play.onclick = () => {
                 play.classList.add("attack");
-
                 wipe.classList.add("active");
 
                 setTimeout(() => {
                     wipe.classList.remove("active");
-                    popup.style.display = "flex";
+                    trailerPopup.style.display = "flex";
                     video.play();
                     play.classList.remove("attack");
                 }, 600);
             };
 
-            close.onclick = () => {
+            g("closeTrailer").onclick = () => {
                 video.pause();
                 video.currentTime = 0;
-                popup.style.display = "none";
+                trailerPopup.style.display = "none";
             };
+
+            /* ===== INFO BUTTONS ===== */
+            g("downloadBtn").onclick = () => (infoPopup.style.display = "flex");
+            g("creditBtn").onclick = () => (infoPopup.style.display = "flex");
+            g("closeInfo").onclick = () => (infoPopup.style.display = "none");
         </script>
     </body>
 </html>
